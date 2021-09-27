@@ -7,6 +7,6 @@ export default class Scheduler {
     }
 
     getNextDateTime(currentDateTime: Date): Ouput {
-        return null;
+        return new Ouput("Prueba", currentDateTime);
     }
 }
