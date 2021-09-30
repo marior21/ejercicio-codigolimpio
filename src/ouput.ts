@@ -1,17 +1,17 @@
 class Ouput {
-    readonly description: string;
-    readonly nextDate: Date;
+    private readonly _description: string;
+    private readonly _nextDate: Date;
 
-    constructor(theDescription: string, theNextDate: Date) {
-        this.description = theDescription;
-        this.nextDate = theNextDate;
+    constructor(description: string, nextDate: Date) {
+        this._description = description;
+        this._nextDate = nextDate;
     }
 
-    getDescription(): string {
-        return this.description;
+    get description(): string {
+        return this._description;
     }
 
-    getNextDate(): Date {
-        return this.nextDate;
+    get nextDate(): Date {
+        return this._nextDate;
     }
 }
