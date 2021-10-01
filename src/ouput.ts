@@ -1,4 +1,4 @@
-class Ouput {
+export default class Ouput {
     private readonly _description: string;
     private readonly _nextDate: Date;
 

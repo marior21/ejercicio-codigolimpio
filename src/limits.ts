@@ -1,4 +1,4 @@
-class Limits {
+export default class Limits {
     private readonly _startDate: Date;
     private readonly _endDate: Date;
 

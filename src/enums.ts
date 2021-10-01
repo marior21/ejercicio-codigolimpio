@@ -1,8 +1,3 @@
-enum Types {
-    Recurring,
-    Once
-}
-
-enum Ocurrs {
+export enum Ocurrs {
     Daily
 }
