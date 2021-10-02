@@ -1,5 +1,5 @@
-# Resumen de tiempos
-
-- Crear esqueleto de clases 1h
-- Crear funcionalidad del onceDate 0.5h
+# Intructions
+1 - Clone repo
+2 - npm install
+3 - npm run test
 

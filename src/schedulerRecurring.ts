@@ -2,6 +2,7 @@ import ConfigurationRecurring from "./configurationRecurring";
 import Limits from "./limits";
 import Ouput from "./ouput";
 import SchedulerBase from "./schedulerBase";
+import Utils from "./utils";
 
 export default class SchedulerRecurring extends SchedulerBase {
     private readonly _configuration: ConfigurationRecurring;
@@ -17,13 +18,12 @@ export default class SchedulerRecurring extends SchedulerBase {
     }
 
     protected override getOuput(nextDate: Date): Ouput {
-        const date: string = nextDate.toDateString();
-        const time: string = nextDate.toTimeString();
+        const date: string = Utils.formatDate(nextDate);
         const when: string = this._configuration.frecuency === 1
             ? 'every day'
             : `each ${this._configuration.frecuency} day`;
 
-        const description = `Ocurrs ${when}. Shedule will be used on ${date} at ${time} started on ${this._limits.startDate.toLocaleDateString()}`;
+        const description = `Ocurrs ${when}. Shedule will be used on ${date} starting on ${Utils.formatDate(this._limits.startDate)}`;
         console.log(description);
         return new Ouput(description, nextDate);
     }

@@ -24,13 +24,13 @@ export default class ConfigurationRecurring {
     }
 
     validateArguments(): void {
-        if (this._ocurrs === null) {
-            throw new Error("If the type is Recurring, ocurrs must have a value");
+        if (this._ocurrs == null) {
+            throw new Error("Ocurrs must have a value");
         }
-        if (this._frecuency === null) {
-            throw new Error("If the type is recurring, frecuency must have a value");
+        if (this._frecuency == null) {
+            throw new Error("Frecuency must have a value");
         }
-        if (this._enabled === null) {
+        if (this._enabled == null) {
             throw new Error("Enabled must have a value");
         }
     }

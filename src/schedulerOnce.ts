@@ -1,6 +1,7 @@
 import Limits from "./limits";
 import Ouput from "./ouput";
 import SchedulerBase from "./schedulerBase";
+import Utils from "./utils";
 
 
 export default class SchedulerOnce extends SchedulerBase {
@@ -15,10 +16,10 @@ export default class SchedulerOnce extends SchedulerBase {
     }
 
     protected override getOuput(date: Date): Ouput {
-        const dateOnce: string = date.toDateString();
-        const timeOnce: string = date.toTimeString();
+        const dateOnce: string = Utils.formatDate(date);
+        const timeOnce: string = Utils.formatTime(date);
         const description =
-            `Ocurrs once. Shedule will be used on ${dateOnce} at ${timeOnce} started on ${this._limits.startDate.toLocaleDateString()}`;
+            `Ocurrs once. Shedule will be used on ${dateOnce} at ${timeOnce} starting on ${Utils.formatDate(this._limits.startDate)}`;
 
         return new Ouput(description, date);
     }

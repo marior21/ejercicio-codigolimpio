@@ -15,6 +15,12 @@ export default abstract class SchedulerBase {
             return null;
         }
         this._currentDate = currentDate;
+        if (this._limits.startDate != null && this._limits.startDate > currentDate) {
+            throw new Error('currentDate is greater than than startDate. Verify the limits');
+        }
+        if (this._limits.endDate != null && this._limits.endDate < currentDate) {
+            throw new Error('currentDate is less than than startDate. Verify the limits');
+        }
         const nextDate = this.getNextDateTimeProtected();
         this._currentDate = null;
         return this.getOuput(nextDate);
