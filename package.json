@@ -1,7 +1,7 @@
 {
-  "name": "node-typescript-boilerplate",
-  "version": "0.0.0",
-  "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
+  "name": "ejercicio-codigolimpio",
+  "version": "1.0.0",
+  "description": "Exersice clean code with Node.js development in TypeScript.",
   "engines": {
     "node": ">= 14.16 <15"
   },
@@ -30,7 +30,7 @@
     "test": "jest --coverage",
     "test:watch": "jest --watch"
   },
-  "author": "Jakub Synowiec <jsynowiec@users.noreply.github.com>",
+  "author": "Mario Rivero",
   "license": "Apache-2.0",
   "dependencies": {
     "tslib": "~2.3.1"
