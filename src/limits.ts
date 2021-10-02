@@ -4,12 +4,6 @@ export default class Limits {
 
 
     constructor(startDate: Date, endDate: Date) {
-        // if (startDate == null) {
-        //     throw new Error("startDate must have a value");
-        // }
-        // if (endDate == null) {
-        //     throw new Error("endDate must have a value");
-        // }
         this._startDate = startDate;
         this._endDate = endDate;
     }
