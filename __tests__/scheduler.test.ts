@@ -1,31 +1,30 @@
-import Limits from "../src/limits";
-import ConfigurationRecurring from "../src/configurationRecurring";
-import Ouput from "../src/ouput";
-import { Ocurrs } from "../src/enums";
-import SchedulerBase from "../src/schedulerBase";
-import SchedulerOnce from "../src/schedulerOnce";
-import SchedulerRecurring from "../src/schedulerRecurring";
-
-describe('scheduler', () => {
-  const onceDate: Date = new Date(2020, 0, 8, 14);
-  const currentDate: Date = new Date(2020, 0, 4);
-
-  function getOnceScheduler(enabled: boolean): SchedulerOnce {
-    const startDate: Date = new Date(2020, 0, 1);
-    const limits: Limits = new Limits(startDate, null);
-    return new SchedulerOnce(enabled, onceDate, limits);
-  };
+import Limits from "../src/domain/limits";
+import ConfigurationRecurring from "../src/domain/configurationRecurring";
+import Ouput from "../src/domain/ouput";
+import { Ocurrs } from "../src/domain/enums";
+import SchedulerBase from "../src/domain/schedulerBase";
+import SchedulerOnce from "../src/domain/schedulerOnce";
+import SchedulerRecurring from "../src/domain/schedulerRecurring";
 
 
-  function getRecurringScheduler(enabled: boolean, ocurrs: Ocurrs, frecuency: number): SchedulerRecurring {
-    const startDate: Date = new Date(2020, 0, 1);
-    const configuration: ConfigurationRecurring = new ConfigurationRecurring(ocurrs, frecuency, enabled);
-    const limits: Limits = new Limits(startDate, null);
-    return new SchedulerRecurring(configuration, limits);
-  };
+const onceDate: Date = new Date(2020, 0, 8, 14);
+const currentDate: Date = new Date(2020, 0, 4);
+
+function getOnceScheduler(enabled: boolean): SchedulerOnce {
+  const startDate: Date = new Date(2020, 0, 1);
+  const limits: Limits = new Limits(startDate, null);
+  return new SchedulerOnce(enabled, onceDate, limits);
+};
 
 
+function getRecurringScheduler(enabled: boolean, ocurrs: Ocurrs, frecuency: number): SchedulerRecurring {
+  const startDate: Date = new Date(2020, 0, 1);
+  const configuration: ConfigurationRecurring = new ConfigurationRecurring(ocurrs, frecuency, enabled);
+  const limits: Limits = new Limits(startDate, null);
+  return new SchedulerRecurring(configuration, limits);
+};
 
+describe('scheduler once', () => {
   test('next date in once date mode in scheduler enabled return once date', () => {
     const scheduler: SchedulerBase = getOnceScheduler(true);
     const ouput: Ouput = scheduler.getNextDateTime(currentDate);
@@ -39,7 +38,10 @@ describe('scheduler', () => {
 
     expect(ouput).toBe(null);
   });
+});
 
+
+describe('scheduler recurring', () => {
   test('next date in recurring date mode in scheduler enabled and one day frecuency return correct date', () => {
     const scheduler: SchedulerBase = getRecurringScheduler(true, Ocurrs.Daily, 1);
     const ouput: Ouput = scheduler.getNextDateTime(currentDate);

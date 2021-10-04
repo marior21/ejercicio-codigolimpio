@@ -2,7 +2,7 @@ import ConfigurationRecurring from "./configurationRecurring";
 import Limits from "./limits";
 import Ouput from "./ouput";
 import SchedulerBase from "./schedulerBase";
-import Utils from "./utils";
+import Utils from "../utils/utils";
 
 export default class SchedulerRecurring extends SchedulerBase {
     private readonly _configuration: ConfigurationRecurring;

@@ -1,7 +1,7 @@
 import Limits from "./limits";
 import Ouput from "./ouput";
 import SchedulerBase from "./schedulerBase";
-import Utils from "./utils";
+import Utils from "../utils/utils";
 
 
 export default class SchedulerOnce extends SchedulerBase {
