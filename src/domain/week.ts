@@ -1,11 +1,11 @@
 export default class Week {
-    public monday: boolean;
-    public tuesday: boolean;
-    public wednesday: boolean;
-    public thursday: boolean;
-    public friday: boolean;
-    public saturday: boolean;
-    public sunday: boolean;
+    public monday = false;
+    public tuesday = false;
+    public wednesday = false;
+    public thursday = false;
+    public friday = false;
+    public saturday = false;
+    public sunday = false;
 
     public isDayChoosen(day: number): boolean {
         switch (day) {
@@ -19,4 +19,15 @@ export default class Week {
             default: throw new Error("Day week overflow");
         }
     }
+
+    public isEmpty(): boolean {
+        return this.sunday === false &&
+            this.monday === false &&
+            this.tuesday === false &&
+            this.wednesday === false &&
+            this.thursday === false &&
+            this.friday === false &&
+            this.saturday === false;
+    }
+
 }
