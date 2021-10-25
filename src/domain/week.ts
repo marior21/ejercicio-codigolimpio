@@ -9,13 +9,13 @@ export default class Week {
 
     public isDayChoosen(day: number): boolean {
         switch (day) {
-            case 0: return this.sunday;
-            case 1: return this.monday;
-            case 2: return this.tuesday;
-            case 3: return this.wednesday;
-            case 4: return this.thursday;
-            case 5: return this.friday;
-            case 6: return this.saturday;
+            case Week.MONDAY: return this.monday;
+            case Week.TUESDAY: return this.tuesday;
+            case Week.WEDNESDAY: return this.wednesday;
+            case Week.THURSDAY: return this.thursday;
+            case Week.FRIDAY: return this.friday;
+            case Week.SATURDAY: return this.saturday;
+            case Week.SUNDAY: return this.sunday;
             default: throw new Error("Day week overflow");
         }
     }
@@ -30,4 +30,11 @@ export default class Week {
             this.saturday === false;
     }
 
+    public static readonly MONDAY = 1;
+    public static readonly TUESDAY = 2;
+    public static readonly WEDNESDAY = 3;
+    public static readonly THURSDAY = 4;
+    public static readonly FRIDAY = 5;
+    public static readonly SATURDAY = 6;
+    public static readonly SUNDAY = 7;
 }

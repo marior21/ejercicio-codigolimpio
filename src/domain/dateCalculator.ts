@@ -1,3 +1,4 @@
+import Utils from "../utils/utils";
 import Week from "./week";
 
 export default class DateCalculator {
@@ -22,43 +23,42 @@ export default class DateCalculator {
 
     public nextDate(currentDate: Date): Date {
         const nextDate: Date = currentDate;
-        let currentWeekDay: number = currentDate.getDay();
-        let numberDaysToSum = 0;
-        for (let day = currentWeekDay + 1; day < 7; day++) {
-            numberDaysToSum++;
-            if (this._weekConfig.isDayChoosen(day)) {
-                break;
-            }
-        }
+        let currentWeekDay: number = Utils.getDaySpanishFormat(currentDate);
+        const isCurrentWeekDayChoosen: boolean = this._weekConfig.isDayChoosen(currentWeekDay);
+        let numberDaysToSum = this.getNumberDays(
+            isCurrentWeekDayChoosen ? currentWeekDay + 1 : currentWeekDay, isCurrentWeekDayChoosen ? 1 : 0);
         if (numberDaysToSum > 0) {
             nextDate.setDate(nextDate.getDate() + numberDaysToSum);
         }
         else {
             nextDate.setDate(nextDate.getDate() + (this._numberWeeks * 7));
-            currentWeekDay = nextDate.getDay();
-            numberDaysToSum = 0;
-            for (let day = currentWeekDay + 1; day < 7; day++) {
-                numberDaysToSum++;
-                if (this._weekConfig.isDayChoosen(day)) {
-                    break;
-                }
-            }
-            if (numberDaysToSum > 0) {
+            currentWeekDay = Utils.getDaySpanishFormat(nextDate);
+            numberDaysToSum = this.getNumberDays(currentWeekDay, 0);
+            if (currentWeekDay !== Week.SUNDAY && numberDaysToSum > 0) {
                 nextDate.setDate(nextDate.getDate() + numberDaysToSum);
             }
             else {
-                nextDate.setDate(nextDate.getDate() + 1);
-                currentWeekDay = nextDate.getDay();
-
-                for (let day = currentWeekDay; day < 7; day++) {
-                    numberDaysToSum++;
-                    if (this._weekConfig.isDayChoosen(day)) {
-                        break;
-                    }
+                nextDate.setDate(nextDate.getDate() + (8 - Utils.getDaySpanishFormat(nextDate)));
+                currentWeekDay = Utils.getDaySpanishFormat(nextDate);
+                numberDaysToSum = this.getNumberDays(currentWeekDay, 0);
+                if (numberDaysToSum > 0) {
+                    nextDate.setDate(nextDate.getDate() + numberDaysToSum);
                 }
             }
         }
-
         return nextDate;
+    }
+
+    private getNumberDays(startDay: number, startNumber: number): number {
+        let numberDaysToSum = startNumber;
+        let dayChoosen = false;
+        for (let day = startDay; day <= 7; day++) {
+            if (this._weekConfig.isDayChoosen(day)) {
+                dayChoosen = true;
+                break;
+            }
+            numberDaysToSum++;
+        }
+        return dayChoosen ? numberDaysToSum : 0;
     }
 }
