@@ -1,12 +1,21 @@
+import DailyConfiguration from "../configuration/dailyConfiguration";
 import { TimeUnit } from "../enums";
 import TimeCalculator from "./timeCalculator";
 import TimeCalculatorHour from "./timeCalculatorHour";
 import TimeCalculatorMinute from "./timeCalculatorMinute";
+import TimeCalculatorOnce from "./timeCalculatorOnce";
 import TimeCalculatorSecond from "./timeCalculatorSecond";
 
 export default class TimeCalculatorFactory {
 
-    public static create(timeUnit: TimeUnit, occursEveryNumber: number, startTime: Date, endTime: Date): TimeCalculator {
+    public static create(dailayConfiguration: DailyConfiguration): TimeCalculator {
+        const { timeUnit, occursEveryNumber, startTime, endTime, occursOnceTime } = dailayConfiguration;
+        if (occursOnceTime != null) {
+            return new TimeCalculatorOnce(occursOnceTime);
+        }
+        if (timeUnit == null) {
+            return null;
+        }
         switch (timeUnit) {
             case TimeUnit.Hours:
                 return new TimeCalculatorHour(occursEveryNumber, startTime, endTime);

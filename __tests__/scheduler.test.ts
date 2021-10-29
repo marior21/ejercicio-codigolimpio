@@ -1,6 +1,6 @@
 import Limits from "../src/domain/configuration/limits";
 import Ouput from "../src/domain/ouput";
-import { Occurs, SchedulerType } from "../src/domain/enums";
+import { Occurs, SchedulerType, TimeUnit } from "../src/domain/enums";
 import Scheduler from "../src/domain/scheduler/scheduler";
 import Configuration from "../src/domain/configuration/configuration";
 import SchedulerFactory from "../src/domain/scheduler/schedulerFactory";
@@ -76,15 +76,32 @@ describe('scheduler recurring', () => {
   });
 
   test.each([
-    [1,Date.UTC(2020, 4, 4), Date.UTC(null, null, null, 12, 23, 56), Date.UTC(2020, 4, 5, 12, 23, 56)]
-  ])('next date calculate is correct with daily configuration and occurs once %p anad %p',
-    (frecuency:number, inputNumberDate: number, occurOnceTimeNumber: number, expectedNumberDate: number) => {
-      const inputDate = new Date(inputNumberDate);
-      const occurOnceTime = new Date(occurOnceTimeNumber);
-      const expectedDate = new Date(expectedNumberDate);
+    [1, new Date(2020, 4, 4), new Date(null, null, null, 12, 23, 56), new Date(2020, 4, 5, 12, 23, 56)],
+    [2, new Date(2020, 4, 4), new Date(null, null, null, 23, 23, 56), new Date(2020, 4, 6, 23, 23, 56)],
+    [10, new Date(2020, 4, 4), new Date(null, null, null, 12, 54, 56), new Date(2020, 4, 14, 12, 54, 56)]
+  ])('next date calculate is correct with daily configuration and occurs once %p and %p',
+    (frecuency: number, inputDate: Date, occurOnceTime: Date, expectedDate: Date) => {
       const startDate: Date = new Date(2020, 0, 1);
       const limits: Limits = new Limits(startDate, null);
       const dailayConfiguration: DailyConfiguration = new DailyConfiguration(frecuency, occurOnceTime, null, null, null, null);
+      const configuration: Configuration = new Configuration(SchedulerType.Recurring, true, Occurs.Daily, currentDate, limits, null, dailayConfiguration);
+
+      const scheduler: Scheduler = SchedulerFactory.create(configuration);
+
+      const nextDate: Date = scheduler.getNextDateTime(inputDate).nextDate;
+
+      expect(nextDate).toStrictEqual(expectedDate);
+    });
+
+  test.each([
+    [1, new Date(2020, 4, 4, 10, 20, 34), 2, TimeUnit.Hours, new Date(2020, 4, 5, 12, 20, 34)],
+  ])('next date calculate is correct with daily configuration and occurs every %p and %p',
+    (frecuency: number, inputDate: Date, occursEveryNumber: number, timeUnit: TimeUnit, expectedDate: Date) => {
+      const startDate: Date = new Date(2020, 0, 1);
+      const limits: Limits = new Limits(startDate, null);
+      const starTime = new Date(null, null, null, 4);
+      const endTime = new Date(null, null, null, 18);
+      const dailayConfiguration: DailyConfiguration = new DailyConfiguration(frecuency, null, timeUnit, occursEveryNumber, starTime, endTime);
       const configuration: Configuration = new Configuration(SchedulerType.Recurring, true, Occurs.Daily, currentDate, limits, null, dailayConfiguration);
 
       const scheduler: Scheduler = SchedulerFactory.create(configuration);

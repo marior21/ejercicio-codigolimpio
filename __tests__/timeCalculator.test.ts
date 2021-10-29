@@ -1,6 +1,7 @@
 import { TimeUnit } from "../src/domain/enums";
 import TimeCalculator from "../src/domain/calculators/timeCalculator";
 import TimeCalculatorFactory from "../src/domain/calculators/timeCalculatorFactory";
+import DailyConfiguration from "../src/domain/configuration/dailyConfiguration";
 
 
 describe('time calculador', () => {
@@ -21,7 +22,8 @@ describe('time calculador', () => {
     const expectedDate = expectedNumberDate != null ? new Date(expectedNumberDate) : null;
     const starTime = new Date(Date.UTC(null, null, null, 4));
     const endTime = new Date(Date.UTC(null, null, null, 18));
-    const timealculator: TimeCalculator = TimeCalculatorFactory.create(inputUnit, inputOccursEvery, starTime, endTime);
+    const dailayConfiguration: DailyConfiguration = new DailyConfiguration(0, null, inputUnit, inputOccursEvery, starTime, endTime);
+    const timealculator: TimeCalculator = TimeCalculatorFactory.create(dailayConfiguration);
 
     const nextDate = timealculator.nextTime(inputDate);
 
@@ -34,12 +36,13 @@ describe('time calculador', () => {
   test('timeCalculator throw error if TimeUnit is not supported', () => {
     const starTime = new Date(Date.UTC(null, null, null, 4));
     const endTime = new Date(Date.UTC(null, null, null, 18));
-    expect(() => TimeCalculatorFactory.create(7, 2, starTime, endTime)).toThrowError();
+    const dailayConfiguration: DailyConfiguration = new DailyConfiguration(0, null, 7, 2, starTime, endTime);
+    expect(() => TimeCalculatorFactory.create(dailayConfiguration)).toThrowError();
   });
 
-  test('timeCalculator throw error if endTime is less then starTime', () => {
+  test('dailyConfiguration throw error if endTime is less then starTime', () => {
     const starTime = new Date(Date.UTC(null, null, null, 14));
     const endTime = new Date(Date.UTC(null, null, null, 12));
-    expect(() => TimeCalculatorFactory.create(TimeUnit.Hours, 2, starTime, endTime)).toThrowError();
+    expect(() => new DailyConfiguration(0, null, TimeUnit.Hours, 2, starTime, endTime)).toThrowError();
   });
 });

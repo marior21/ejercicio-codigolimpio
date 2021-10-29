@@ -2,6 +2,9 @@ import Configuration from "../configuration/configuration";
 import Ouput from "../ouput";
 import SchedulerBase from "./scheduler";
 import Utils from "../../utils/utils";
+import TimeCalculator from "../calculators/timeCalculator";
+import TimeCalculatorFactory from "../calculators/timeCalculatorFactory";
+import DateCalculator from "../calculators/dateCalculator";
 
 export default class SchedulerRecurring extends SchedulerBase {
     private readonly _configuration: Configuration;
@@ -12,27 +15,24 @@ export default class SchedulerRecurring extends SchedulerBase {
     }
 
     protected override getNextDateTimeProtected(): Date {
-        const nextDate: Date = new Date(this._currentDate);
+        let nextDate: Date = new Date(this._currentDate);
 
         if (this._configuration.dailyConfiguration != null) {
-            nextDate.setHours(0);
-            nextDate.setMinutes(0);
-            nextDate.setSeconds(0);
             nextDate.setDate(nextDate.getDate() + this._configuration.dailyConfiguration.frecuency);
-            const occursOnceTime: Date = this._configuration.dailyConfiguration.occursOnceTime;
-            if (occursOnceTime != null) {
-               nextDate.setHours(occursOnceTime.getHours());
-               nextDate.setMinutes(occursOnceTime.getMinutes());
-               nextDate.setSeconds(occursOnceTime.getSeconds());     
+            const timeCalculator: TimeCalculator = TimeCalculatorFactory.create(this._configuration.dailyConfiguration);
+            if (timeCalculator != null) {
+                const nextDailyTime: Date = timeCalculator.nextTime(nextDate);
+                if (nextDailyTime != null) {
+                    nextDate.setHours(nextDailyTime.getHours(), nextDailyTime.getMinutes(), nextDailyTime.getSeconds());
+                }
             }
         }
 
         if (this._configuration.weeklyConfiguration != null) {
+            const dateCalculator: DateCalculator = new DateCalculator(this._configuration.weeklyConfiguration.numberWeeks, this._configuration.weeklyConfiguration.weekConfig);
+            nextDate = dateCalculator.nextDate(nextDate);
+        }
 
-        }
-        if (this._configuration != null) {
-            //algo
-        }
 
         return nextDate;
     }
