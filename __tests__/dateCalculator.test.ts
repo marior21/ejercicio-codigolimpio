@@ -1,5 +1,5 @@
-import DateCalculator from "../src/domain/dateCalculator";
-import Week from "../src/domain/week";
+import DateCalculator from "../src/domain/calculators/dateCalculator";
+import Week from "../src/domain/configuration/week";
 
 
 describe('date calculador', () => {
@@ -45,9 +45,7 @@ describe('date calculador', () => {
     const expectedDate = new Date(expectedNumberDate);
     const dateCalculator: DateCalculator = new DateCalculator(inputNumberWeeks, week);
 
-    const nextDate = dateCalculator.nextDate(inputDate);
-    // console.log(expectedDate.toString());
-    // console.log(nextDate.toString());
+    const nextDate = dateCalculator.nextDate(inputDate);  
 
     expect(nextDate).toStrictEqual(expectedDate);
   });

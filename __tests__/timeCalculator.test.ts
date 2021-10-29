@@ -1,6 +1,6 @@
 import { TimeUnit } from "../src/domain/enums";
-import TimeCalculator from "../src/domain/timeCalculator";
-import TimeCalculatorFactory from "../src/domain/timeCalculatorFactory";
+import TimeCalculator from "../src/domain/calculators/timeCalculator";
+import TimeCalculatorFactory from "../src/domain/calculators/timeCalculatorFactory";
 
 
 describe('time calculador', () => {

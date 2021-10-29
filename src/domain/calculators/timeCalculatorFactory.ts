@@ -1,4 +1,4 @@
-import { TimeUnit } from "./enums";
+import { TimeUnit } from "../enums";
 import TimeCalculator from "./timeCalculator";
 import TimeCalculatorHour from "./timeCalculatorHour";
 import TimeCalculatorMinute from "./timeCalculatorMinute";

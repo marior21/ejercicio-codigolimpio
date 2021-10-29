@@ -1,5 +1,5 @@
-import Utils from "../utils/utils";
-import Week from "./week";
+import Utils from "../../utils/utils";
+import Week from "../configuration/week";
 
 export default class DateCalculator {
     private static readonly daysOfWeek: number = 7;

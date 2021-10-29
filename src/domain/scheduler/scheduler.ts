@@ -1,7 +1,7 @@
-import Limits from "./limits";
-import Ouput from "./ouput";
+import Limits from "./../configuration/limits";
+import Ouput from "./../ouput";
 
-export default abstract class SchedulerBase {
+export default abstract class Scheduler {
     protected readonly _limits: Limits;
     protected _currentDate: Date;
     private readonly _enabled: boolean;
