@@ -11,10 +11,10 @@ export default class Utils {
         return date.getDay() === 0 ? 7 : date.getDay();
     }
 
-    public static isSameTime(time1: Date, time2: Date): boolean {
-        return time1.getHours() === time2.getHours() &&
-            time1.getMinutes() === time2.getMinutes() &&
-            time1.getSeconds() === time2.getSeconds() &&
-            time1.getMilliseconds() === time2.getMilliseconds();
-    }
+    // public static isSameTime(time1: Date, time2: Date): boolean {
+    //     return time1.getHours() === time2.getHours() &&
+    //         time1.getMinutes() === time2.getMinutes() &&
+    //         time1.getSeconds() === time2.getSeconds() &&
+    //         time1.getMilliseconds() === time2.getMilliseconds();
+    // }
 }

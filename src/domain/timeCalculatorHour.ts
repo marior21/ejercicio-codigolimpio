@@ -1,6 +1,6 @@
-import TimeCalculatorBase from "./timeCalculatorBase";
+import TimeCalculator from "./timeCalculator";
 
-export default class TimeCalculatorHour extends TimeCalculatorBase {
+export default class TimeCalculatorHour extends TimeCalculator {
     private readonly _occursEveryNumber: number;
 
     constructor(occursEveryNumber: number, startTime: Date, endTime: Date) {
