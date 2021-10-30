@@ -76,9 +76,10 @@ describe('scheduler recurring', () => {
   });
 
   test.each([
-    [1, new Date(2020, 4, 4), new Date(null, null, null, 12, 23, 56), new Date(2020, 4, 5, 12, 23, 56)],
-    [2, new Date(2020, 4, 4), new Date(null, null, null, 23, 23, 56), new Date(2020, 4, 6, 23, 23, 56)],
-    [10, new Date(2020, 4, 4), new Date(null, null, null, 12, 54, 56), new Date(2020, 4, 14, 12, 54, 56)]
+    // [1, new Date(2020, 4, 4), new Date(null, null, null, 12, 23, 56), new Date(2020, 4, 4, 12, 23, 56)],
+    // [2, new Date(2020, 4, 4), new Date(null, null, null, 23, 23, 56), new Date(2020, 4, 4, 23, 23, 56)],
+    // [10, new Date(2020, 4, 4), new Date(null, null, null, 12, 54, 56), new Date(2020, 4, 4, 12, 54, 56)],
+    [10, new Date(2020, 4, 4, 13), new Date(null, null, null, 12, 54, 56), new Date(2020, 4, 14, 12, 54, 56)]
   ])('next date calculate is correct with daily configuration and occurs once %p and %p',
     (frecuency: number, inputDate: Date, occurOnceTime: Date, expectedDate: Date) => {
       const startDate: Date = new Date(2020, 0, 1);
@@ -94,8 +95,14 @@ describe('scheduler recurring', () => {
     });
 
   test.each([
-    [1, new Date(2020, 4, 4, 10, 20, 34), 2, TimeUnit.Hours, new Date(2020, 4, 5, 12, 20, 34)],
-  ])('next date calculate is correct with daily configuration and occurs every %p and %p',
+    [1, new Date(2020, 4, 4, 10, 20, 34), 2, TimeUnit.Hours, new Date(2020, 4, 4, 12, 20, 34)],
+    [1, new Date(2020, 4, 4, 10, 20, 34), 2, TimeUnit.Minuts, new Date(2020, 4, 4, 10, 22, 34)],
+    [1, new Date(2020, 4, 4, 10, 20, 34), 2, TimeUnit.Seconds, new Date(2020, 4, 4, 10, 20, 36)],
+    [3, new Date(2020, 4, 4, 10, 20, 34), 7, TimeUnit.Hours, new Date(2020, 4, 4, 17, 20, 34)],
+    [3, new Date(2020, 4, 4, 10, 20, 34), 45, TimeUnit.Minuts, new Date(2020, 4, 4, 11, 5, 34)],
+    [3, new Date(2020, 4, 4, 10, 20, 30), 34, TimeUnit.Seconds, new Date(2020, 4, 4, 10, 21, 4)],
+    [1, new Date(2020, 4, 4, 18, 20, 34), 2, TimeUnit.Hours, new Date(2020, 4, 5, 4, 0, 0)]
+  ])('next date calculate is correct with daily %p configuration and occurs every hour, minute or second',
     (frecuency: number, inputDate: Date, occursEveryNumber: number, timeUnit: TimeUnit, expectedDate: Date) => {
       const startDate: Date = new Date(2020, 0, 1);
       const limits: Limits = new Limits(startDate, null);
@@ -110,4 +117,5 @@ describe('scheduler recurring', () => {
 
       expect(nextDate).toStrictEqual(expectedDate);
     });
+
 });

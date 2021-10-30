@@ -9,20 +9,20 @@ import TimeCalculatorSecond from "./timeCalculatorSecond";
 export default class TimeCalculatorFactory {
 
     public static create(dailayConfiguration: DailyConfiguration): TimeCalculator {
-        const { timeUnit, occursEveryNumber, startTime, endTime, occursOnceTime } = dailayConfiguration;
+        const { timeUnit, occursEveryNumber, startTime, endTime, occursOnceTime, frecuency } = dailayConfiguration;
         if (occursOnceTime != null) {
-            return new TimeCalculatorOnce(occursOnceTime);
+            return new TimeCalculatorOnce(occursOnceTime, frecuency);
         }
         if (timeUnit == null) {
             return null;
         }
         switch (timeUnit) {
             case TimeUnit.Hours:
-                return new TimeCalculatorHour(occursEveryNumber, startTime, endTime);
+                return new TimeCalculatorHour(occursEveryNumber, startTime, endTime, frecuency);
             case TimeUnit.Minuts:
-                return new TimeCalculatorMinute(occursEveryNumber, startTime, endTime);
+                return new TimeCalculatorMinute(occursEveryNumber, startTime, endTime, frecuency);
             case TimeUnit.Seconds:
-                return new TimeCalculatorSecond(occursEveryNumber, startTime, endTime);
+                return new TimeCalculatorSecond(occursEveryNumber, startTime, endTime, frecuency);
             default:
                 throw new Error(`${timeUnit} is not a TimeUnit supported`);
         }

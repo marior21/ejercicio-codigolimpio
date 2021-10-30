@@ -16,15 +16,20 @@ export default class SchedulerRecurring extends SchedulerBase {
 
     protected override getNextDateTimeProtected(): Date {
         let nextDate: Date = new Date(this._currentDate);
-
         if (this._configuration.dailyConfiguration != null) {
-            nextDate.setDate(nextDate.getDate() + this._configuration.dailyConfiguration.frecuency);
             const timeCalculator: TimeCalculator = TimeCalculatorFactory.create(this._configuration.dailyConfiguration);
             if (timeCalculator != null) {
-                const nextDailyTime: Date = timeCalculator.nextTime(nextDate);
-                if (nextDailyTime != null) {
-                    nextDate.setHours(nextDailyTime.getHours(), nextDailyTime.getMinutes(), nextDailyTime.getSeconds());
-                }
+                nextDate = timeCalculator.nextTime(nextDate);
+                // if (nextDailyTime != null) {
+                //     nextDate = nextDailyTime;//.setHours(nextDailyTime.getHours(), nextDailyTime.getMinutes(), nextDailyTime.getSeconds());
+                // } else {
+                //     nextDate.setDate(nextDate.getDate() + this._configuration.dailyConfiguration.frecuency);
+                //     const startTime: Date = this._configuration.dailyConfiguration.startTime;
+                //     nextDate.setHours(startTime.getHours(), startTime.getMinutes(), startTime.getSeconds());
+                // }
+            }
+            else {
+                nextDate.setDate(nextDate.getDate() + this._configuration.dailyConfiguration.frecuency);
             }
         }
 

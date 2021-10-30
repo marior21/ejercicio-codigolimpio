@@ -2,26 +2,35 @@ export default abstract class TimeCalculator {
 
     protected readonly _startTime: Date;
     protected readonly _endTime: Date;
+    protected readonly _frecuency: number;
 
-    constructor(startTime: Date, endTime: Date) {
+    constructor(startTime: Date, endTime: Date, frecuncy: number) {
         if (endTime != null && startTime != null && endTime < startTime) {
             throw new Error('endTime is not possible to be less than startTime');
         }
         this._startTime = startTime;
         this._endTime = endTime;
+        this._frecuency = frecuncy;
     }
 
     public nextTime(currentTime: Date): Date {
-        if (this.isLessThanStarTime(currentTime)) {
-            return null;
+        let nextTime: Date = new Date(currentTime);
+        if (this.isLessThanStarTime(nextTime)) {
+            nextTime.setHours(this._startTime.getHours(), this._startTime.getMinutes(), this._startTime.getSeconds());
+            return nextTime;
         }
-        if (this.isGreaterThanEndTime(currentTime)) {
-            return null;
-        }
-        const nextTime = this.nextTimeProtected(currentTime);
         if (this.isGreaterThanEndTime(nextTime)) {
-            return null;
+            nextTime.setDate(nextTime.getDate() + this._frecuency);
+            nextTime.setHours(this._startTime.getHours(), this._startTime.getMinutes(), this._startTime.getSeconds());
+            return nextTime;
         }
+
+        nextTime = this.nextTimeProtected(currentTime);
+        if (this.isGreaterThanEndTime(nextTime)) {
+            nextTime.setDate(nextTime.getDate() + this._frecuency);
+            nextTime.setHours(this._startTime.getHours(), this._startTime.getMinutes(), this._startTime.getSeconds());
+        }
+
         return nextTime;
     }
 
