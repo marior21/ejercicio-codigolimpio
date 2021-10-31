@@ -30,6 +30,12 @@ export default class Week {
             this.saturday === false;
     }
 
+    public getDescription(): string {
+        const arrayKeys = Object.keys(this).filter(day => this[day]);
+        const lastKey = arrayKeys.pop();
+        return `${arrayKeys.join(', ')} and ${lastKey}`;
+    }
+
     public static readonly MONDAY = 1;
     public static readonly TUESDAY = 2;
     public static readonly WEDNESDAY = 3;

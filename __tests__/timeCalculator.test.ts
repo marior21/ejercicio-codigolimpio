@@ -2,6 +2,7 @@ import { TimeUnit } from "../src/domain/enums";
 import TimeCalculator from "../src/domain/calculators/timeCalculator";
 import TimeCalculatorFactory from "../src/domain/calculators/timeCalculatorFactory";
 import DailyConfiguration from "../src/domain/configuration/dailyConfiguration";
+import TimeCalculatorHour from "../src/domain/calculators/timeCalculatorHour";
 
 
 describe('time calculador', () => {
@@ -32,6 +33,13 @@ describe('time calculador', () => {
     const endTime = new Date(new Date(null, null, null, 18));
     const dailayConfiguration: DailyConfiguration = new DailyConfiguration(0, null, 7, 2, starTime, endTime);
     expect(() => TimeCalculatorFactory.create(dailayConfiguration)).toThrowError();
+  });
+
+  test('timeCalculator throw error if starttime is greater than endtime', () => {
+    const starTime = new Date(new Date(null, null, null, 20));
+    const endTime = new Date(new Date(null, null, null, 18));
+
+    expect(() => new TimeCalculatorHour(1, starTime, endTime, 1)).toThrowError();
   });
 
   test('dailyConfiguration throw error if endTime is less then starTime', () => {

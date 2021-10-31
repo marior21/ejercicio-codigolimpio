@@ -3,6 +3,7 @@ export default abstract class TimeCalculator {
     protected readonly _startTime: Date;
     protected readonly _endTime: Date;
     protected readonly _frecuency: number;
+    protected _isLastTime = false;;
 
     constructor(startTime: Date, endTime: Date, frecuncy: number) {
         if (endTime != null && startTime != null && endTime < startTime) {
@@ -13,6 +14,10 @@ export default abstract class TimeCalculator {
         this._frecuency = frecuncy;
     }
 
+    get isLastTime(): boolean {
+        return this._isLastTime;
+    }
+
     public nextTime(currentTime: Date): Date {
         let nextTime: Date = new Date(currentTime);
         if (this.isLessThanStarTime(nextTime)) {
@@ -20,6 +25,7 @@ export default abstract class TimeCalculator {
             return nextTime;
         }
         if (this.isGreaterThanEndTime(nextTime)) {
+            this._isLastTime = true;
             nextTime.setDate(nextTime.getDate() + this._frecuency);
             nextTime.setHours(this._startTime.getHours(), this._startTime.getMinutes(), this._startTime.getSeconds());
             return nextTime;
@@ -27,6 +33,7 @@ export default abstract class TimeCalculator {
 
         nextTime = this.nextTimeProtected(currentTime);
         if (this.isGreaterThanEndTime(nextTime)) {
+            this._isLastTime = true;
             nextTime.setDate(nextTime.getDate() + this._frecuency);
             nextTime.setHours(this._startTime.getHours(), this._startTime.getMinutes(), this._startTime.getSeconds());
         }

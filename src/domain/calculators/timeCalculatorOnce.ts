@@ -4,11 +4,14 @@ export default class TimeCalculatorOnce extends TimeCalculator {
     constructor(occursOnceTime: Date, frecuency: number) {
         super(null, null, frecuency)
         this._occursOnceTime = occursOnceTime;
+        this._isLastTime = true;
     }
 
     protected override nextTimeProtected(currentTime: Date): Date {
         const nextTime = new Date(currentTime);
-        if (nextTime.getTime() > this._occursOnceTime.getTime()) {
+        const occursOnceTime = new Date(nextTime);
+        occursOnceTime.setHours(this._occursOnceTime.getHours(), this._occursOnceTime.getMinutes(), this._occursOnceTime.getSeconds());
+        if (nextTime.getTime() > occursOnceTime.getTime()) {
             nextTime.setDate(nextTime.getDate() + this._frecuency);
         }
         nextTime.setHours(this._occursOnceTime.getHours(), this._occursOnceTime.getMinutes(), this._occursOnceTime.getSeconds());
