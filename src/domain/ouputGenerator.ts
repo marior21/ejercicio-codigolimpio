@@ -18,7 +18,7 @@ export default class OuputGenerator {
                 : `each ${this._configuration.dailyConfiguration.frecuency} days`;
 
         }
-        if (this._configuration.ocurrs == Occurs.Weekley) {
+        if (this._configuration.ocurrs == Occurs.Weekly) {
             when = `every ${this._configuration.weeklyConfiguration.numberWeeks} weeks on ${this._configuration.weeklyConfiguration.weekConfig.getDescription()}`;
         }
         if (this._configuration.dailyConfiguration?.occursOnceTime != null) {

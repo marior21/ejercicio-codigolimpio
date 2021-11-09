@@ -1,7 +1,7 @@
 import Utils from "../../utils/utils";
 import Week from "../configuration/week";
 
-export default class DateCalculator {
+export default class DateWeekCalculator {
     private static readonly daysOfWeek: number = 7;
 
     private readonly _numberWeeks: number;
@@ -35,13 +35,13 @@ export default class DateCalculator {
         }
         else {
             //the next date is in de next (numberWeeks) weeks
-            nextDate.setDate(nextDate.getDate() + (this._numberWeeks * DateCalculator.daysOfWeek));
+            nextDate.setDate(nextDate.getDate() + (this._numberWeeks * DateWeekCalculator.daysOfWeek));
             if (this._weekConfig.isDayChoosen(Utils.getDaySpanishFormat(nextDate)) && nextDate.getTime() !== currentDate.getTime()) {
                 return nextDate;
             }
             //the next date is not inside the week and is necessary to position in next week
             nextDate.setDate(
-                nextDate.getDate() + ((DateCalculator.daysOfWeek + 1) - Utils.getDaySpanishFormat(nextDate)));
+                nextDate.getDate() + ((DateWeekCalculator.daysOfWeek + 1) - Utils.getDaySpanishFormat(nextDate)));
             currentWeekDay = Utils.getDaySpanishFormat(nextDate);
             numberDaysToSum = this.getNumberDays(currentWeekDay, 0);
             if (numberDaysToSum > 0) {
@@ -55,7 +55,7 @@ export default class DateCalculator {
     private getNumberDays(startDay: number, startNumber: number): number {
         let numberDaysToSum = startNumber;
         let dayChoosen = false;
-        for (let day = startDay; day <= DateCalculator.daysOfWeek; day++) {
+        for (let day = startDay; day <= DateWeekCalculator.daysOfWeek; day++) {
             if (this._weekConfig.isDayChoosen(day)) {
                 dayChoosen = true;
                 break;

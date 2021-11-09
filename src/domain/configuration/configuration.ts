@@ -1,6 +1,7 @@
 import { Occurs, SchedulerType } from "../enums";
 import DailyConfiguration from "./dailyConfiguration";
 import Limits from "./limits";
+import MonthlyConfiguration from "./MonthlyConfiguration";
 import WeeklyConfiguration from "./weeklyConfiguration";
 
 export default class Configuration {
@@ -11,6 +12,7 @@ export default class Configuration {
     private readonly _onceDate: Date;
     private readonly _weeklyConfiguration: WeeklyConfiguration;
     private readonly _dailyConfiguration: DailyConfiguration;
+    private readonly _monthlyConfiguration: MonthlyConfiguration;
 
     constructor(
         schedulerType: SchedulerType,
@@ -19,7 +21,8 @@ export default class Configuration {
         onceDate: Date,
         limits: Limits,
         weeklyConfiguration: WeeklyConfiguration,
-        dailyConfiguration: DailyConfiguration
+        dailyConfiguration: DailyConfiguration,
+        monthlyConfiguration: MonthlyConfiguration
     ) {
         this._schedulerType = schedulerType;
         this._occurs = occurs;
@@ -28,6 +31,7 @@ export default class Configuration {
         this._onceDate = onceDate;
         this._weeklyConfiguration = weeklyConfiguration;
         this._dailyConfiguration = dailyConfiguration;
+        this._monthlyConfiguration = monthlyConfiguration;
 
         this.validateArguments();
     }
@@ -60,6 +64,12 @@ export default class Configuration {
         return this._dailyConfiguration;
     }
 
+
+    public get monthlyConfiguration(): MonthlyConfiguration {
+        return this._monthlyConfiguration;
+    }
+
+
     validateArguments(): void {
         if (this.schedulerType === SchedulerType.Once && this.oncedate == null) {
             throw new Error("Oncedate must have a value");
@@ -68,11 +78,14 @@ export default class Configuration {
             if (this._occurs === null) {
                 throw new Error("Ocurrs must have a value");
             }
-            if (this.ocurrs === Occurs.Weekley && this.weeklyConfiguration == null) {
+            if (this.ocurrs === Occurs.Weekly && this.weeklyConfiguration == null) {
                 throw new Error("WeeklyConfiguration must have a value");
             }
             if (this.ocurrs === Occurs.Daily && this.dailyConfiguration == null) {
                 throw new Error("DailyConfiguration must have a value");
+            }
+            if (this.ocurrs === Occurs.Monthly && this.monthlyConfiguration == null) {
+                throw new Error("MonthlyConfiguration must have a value");
             }
         }
         if (this.limits === null) {

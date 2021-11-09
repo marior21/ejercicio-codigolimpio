@@ -3,7 +3,7 @@ import Ouput from "../ouput";
 import SchedulerBase from "./scheduler";
 import TimeCalculator from "../calculators/timeCalculator";
 import TimeCalculatorFactory from "../calculators/timeCalculatorFactory";
-import DateCalculator from "../calculators/dateCalculator";
+import DateWeekCalculator from "../calculators/dateWeekCalculator";
 import OuputGenerator from "../ouputGenerator";
 
 export default class SchedulerRecurring extends SchedulerBase {
@@ -31,7 +31,7 @@ export default class SchedulerRecurring extends SchedulerBase {
             }
         }
         if (this._configuration.weeklyConfiguration != null) {
-            const dateCalculator: DateCalculator = new DateCalculator(this._configuration.weeklyConfiguration.numberWeeks, this._configuration.weeklyConfiguration.weekConfig);
+            const dateCalculator: DateWeekCalculator = new DateWeekCalculator(this._configuration.weeklyConfiguration.numberWeeks, this._configuration.weeklyConfiguration.weekConfig);
             nextDate = dateCalculator.nextDate(nextDate);
         }
         return nextDate;

@@ -1,8 +1,8 @@
-import DateCalculator from "../src/domain/calculators/dateCalculator";
+import DateWeekCalculator from "../src/domain/calculators/dateWeekCalculator";
 import Week from "../src/domain/configuration/week";
 
 
-describe('date calculador', () => {
+describe('date week calculador', () => {
   test.each([
     [0, new Date(2020, 0, 2), new Date(2020, 0, 3)],
     [0, new Date(2020, 4, 5), new Date(2020, 4, 7)],
@@ -42,7 +42,7 @@ describe('date calculador', () => {
     week.thursday = true;
     week.friday = true;
 
-    const dateCalculator: DateCalculator = new DateCalculator(inputNumberWeeks, week);
+    const dateCalculator: DateWeekCalculator = new DateWeekCalculator(inputNumberWeeks, week);
 
     const nextDate = dateCalculator.nextDate(inputDate);
 
@@ -79,7 +79,7 @@ describe('date calculador', () => {
     week.wednesday = true;
     week.sunday = true;
 
-    const dateCalculator: DateCalculator = new DateCalculator(inputNumberWeeks, week);
+    const dateCalculator: DateWeekCalculator = new DateWeekCalculator(inputNumberWeeks, week);
 
     const nextDate = dateCalculator.nextDate(inputDate);
 
@@ -120,7 +120,7 @@ describe('date calculador', () => {
     week.saturday = true;
     week.sunday = true;
 
-    const dateCalculator: DateCalculator = new DateCalculator(inputNumberWeeks, week);
+    const dateCalculator: DateWeekCalculator = new DateWeekCalculator(inputNumberWeeks, week);
 
     const nextDate = dateCalculator.nextDate(inputDate);
 
@@ -130,20 +130,20 @@ describe('date calculador', () => {
   test('dateCalculator throw error if number of weeks is less than zero', () => {
     const week: Week = new Week();
     week.monday = true;
-    expect(() => new DateCalculator(-4, week)).toThrowError();
+    expect(() => new DateWeekCalculator(-4, week)).toThrowError();
 
   });
 
   test('dateCalculator throw error if week is null', () => {
     const week: Week = new Week();
     week.monday = true;
-    expect(() => new DateCalculator(2, null)).toThrowError();
+    expect(() => new DateWeekCalculator(2, null)).toThrowError();
 
   });
 
   test('dateCalculator throw error if week is empty', () => {
     const week: Week = new Week();
-    expect(() => new DateCalculator(2, week)).toThrowError();
+    expect(() => new DateWeekCalculator(2, week)).toThrowError();
 
   });
 });
