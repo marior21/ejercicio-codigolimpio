@@ -1,17 +1,17 @@
-import { FrecuencyVariableDay, MonthlyFrecuencyType, VariableDayType } from "../enums";
+import { VariableDayNumber, MonthlyFrecuencyType, VariableDayType } from "../enums";
 
 export default class MonthlyConfiguration {
     private readonly _frecuencyType: MonthlyFrecuencyType;
     private readonly _day: number;
     private readonly _everyMonths: number;
-    private readonly _frecuencyVariableDay: FrecuencyVariableDay;
+    private readonly _frecuencyVariableDay: VariableDayNumber;
     private readonly _variableDayType: VariableDayType;
 
     constructor(
         frecuencyType: MonthlyFrecuencyType,
         day: number,
         everyMonths: number,
-        frecuencyVariableDay: FrecuencyVariableDay,
+        frecuencyVariableDay: VariableDayNumber,
         variableDayType: VariableDayType) {
 
         this._frecuencyType = frecuencyType;
@@ -34,7 +34,7 @@ export default class MonthlyConfiguration {
         return this._everyMonths;
     }
 
-    get frecuencyVariableDay(): FrecuencyVariableDay {
+    get frecuencyVariableDay(): VariableDayNumber {
         return this._frecuencyVariableDay;
     }
 
