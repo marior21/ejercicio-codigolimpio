@@ -27,28 +27,11 @@ export default class DateMonthCalculatorVariableDay implements IDateMonthCalcula
         let nextTempDate: Date = new Date(nextDate.getFullYear(), nextDate.getMonth(), 1, 0, 0, 0);
         const daysInMonth: number = Utils.getDaysInMonth(nextDate.getFullYear(), nextDate.getMonth());
 
-        if (this._variableDayType > 7) {
-            //week
-        }
-        let dictionaryDays = this.getStepsDays(daysInMonth, nextTempDate);
-
-        if (this._frecuencyVariableDay > 0) {
-            nextDate = dictionaryDays.get(this._frecuencyVariableDay);
-        }
-        else {
-            nextDate = Array.from(dictionaryDays.values()).pop();
-        }
+        nextDate = this.getNextDateFromSteps(nextTempDate, daysInMonth);
 
         if (nextDate < currentDateTemp) {
             nextTempDate = new Date(nextDate.getFullYear(), nextDate.getMonth() + 1, 1, 0, 0, 0);
-            dictionaryDays = this.getStepsDays(daysInMonth, nextTempDate);
-
-            if (this._frecuencyVariableDay > 0) {
-                nextDate = dictionaryDays.get(this._frecuencyVariableDay);
-            }
-            else {
-                nextDate = Array.from(dictionaryDays.values()).pop();
-            }
+            nextDate = this.getNextDateFromSteps(nextTempDate, daysInMonth);
         }
 
         this._firstExecution = false;
@@ -56,21 +39,41 @@ export default class DateMonthCalculatorVariableDay implements IDateMonthCalcula
     }
 
 
-    private getStepsDays(daysInMonth: number, nextTempDate: Date) {
+    private getNextDateFromSteps(nextTempDate: Date, daysInMonth: number) {
+        const stepsDays: Map<number, Date> = this.getStepsDays(daysInMonth, nextTempDate);
+        return this._frecuencyVariableDay > 0
+            ? stepsDays.get(this._frecuencyVariableDay)
+            : Array.from(stepsDays.values()).pop();
+    }
+
+    private getStepsDays(daysInMonth: number, nextTempDate: Date): Map<number, Date> {
         const dictionaryDays = new Map();
         let numberOcurrsDay = 0;
-        //const initialDay: number = nextTempDate.getDate();
         for (let index = 1; index <= daysInMonth; index++) {
-            if (Utils.getDaySpanishFormat(nextTempDate) === this._variableDayType) {
+            if (DateMonthCalculatorVariableDay.isDayVariableDayType(nextTempDate, this._variableDayType)) {
                 numberOcurrsDay++;
                 dictionaryDays.set(numberOcurrsDay, new Date(nextTempDate));
-
             }
+
             if (nextTempDate.getDate() === daysInMonth && numberOcurrsDay < this._frecuencyVariableDay) {
                 index = 1;
             }
             nextTempDate.setDate(nextTempDate.getDate() + 1);
         }
         return dictionaryDays;
+    }
+
+    private static isDayVariableDayType(date: Date, dayType: VariableDayType): boolean {
+        const numberDay: number = Utils.getDaySpanishFormat(date);
+        switch (dayType) {
+            case VariableDayType.Day:
+                return true;
+            case VariableDayType.Weekday:
+                return numberDay !== 6 && numberDay !== 7;
+            case VariableDayType.Weekendday:
+                return numberDay === 6 || numberDay === 7;
+            default:
+                return numberDay === dayType;
+        }
     }
 }

@@ -52,12 +52,12 @@ describe('date month calculador', () => {
     [VariableDayNumber.Last, VariableDayType.Friday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 31, 0), new Date(2020, 3, 24)],
     [VariableDayNumber.Fourth, VariableDayType.Friday, 3, new Date(2020, 0, 24, 0), new Date(2020, 0, 24, 0), new Date(2020, 3, 24)],
 
-    //[VariableDayNumber.First, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 1, 3, 0), new Date(2020, 4, 1)],
-    // [VariableDayNumber.Second, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 10, 0), new Date(2020, 3, 10)],
-    // [VariableDayNumber.Third, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 17, 0), new Date(2020, 3, 17)],
-    // [VariableDayNumber.Fourth, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 24, 0), new Date(2020, 3, 24)],
-    // [VariableDayNumber.Last, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 31, 0), new Date(2020, 3, 24)],
-    // [VariableDayNumber.Fourth, VariableDayType.Weekday, 3, new Date(2020, 0, 24, 0), new Date(2020, 0, 24, 0), new Date(2020, 3, 24)]
+    [VariableDayNumber.First, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 1, 3, 0), new Date(2020, 4, 1)],
+    [VariableDayNumber.Second, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 1, 4, 0), new Date(2020, 4, 4)],
+    [VariableDayNumber.Third, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 3, 0), new Date(2020, 3, 3)],
+    [VariableDayNumber.Fourth, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 6, 0), new Date(2020, 3, 6)],
+    [VariableDayNumber.Last, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 31, 0), new Date(2020, 3, 30)],
+    [VariableDayNumber.Fourth, VariableDayType.Weekday, 3, new Date(2020, 0, 24, 0), new Date(2020, 1, 6, 0), new Date(2020, 4, 6)]
 
   ])('next date calculate is correct with the number %p of %p variable day every %p months, current date %p and result %p',
     (inputVariableDayNumber: VariableDayNumber, inputVariableDayType: VariableDayType, inputEveryMonth, inputDate: Date, expectedDate: Date, nextMonthExpectedDate: Date) => {
@@ -66,11 +66,7 @@ describe('date month calculador', () => {
       let nextDate = dateMonthCalculator.nextDate(inputDate);
       expect(nextDate).toStrictEqual(expectedDate);
 
-      if (nextMonthExpectedDate != null) {
-        nextDate = dateMonthCalculator.nextDate(nextDate);
-        // eslint-disable-next-line jest/no-conditional-expect
-        expect(nextDate).toStrictEqual(nextMonthExpectedDate);
-      }
-
+      nextDate = dateMonthCalculator.nextDate(nextDate);
+      expect(nextDate).toStrictEqual(nextMonthExpectedDate);
     });
 });
