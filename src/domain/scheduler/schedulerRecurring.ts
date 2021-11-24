@@ -5,6 +5,8 @@ import TimeCalculator from "../calculators/timeCalculator";
 import TimeCalculatorFactory from "../calculators/timeCalculatorFactory";
 import DateWeekCalculator from "../calculators/dateWeekCalculator";
 import OuputGenerator from "../ouputGenerator";
+import DateMonthCalculatorFactory from "../calculators/dateMonthCalculatorFactory";
+import IDateMonthCalculator from "../calculators/iDateMonthCalculator";
 
 export default class SchedulerRecurring extends SchedulerBase {
     private readonly _configuration: Configuration;
@@ -22,7 +24,7 @@ export default class SchedulerRecurring extends SchedulerBase {
             const timeCalculator: TimeCalculator = TimeCalculatorFactory.create(this._configuration.dailyConfiguration);
             if (timeCalculator != null) {
                 nextDate = timeCalculator.nextTime(nextDate);
-                if (timeCalculator.isLastTime === false) {
+                if (timeCalculator.isLastTime === false && this._configuration.monthlyConfiguration == null) {
                     return nextDate;
                 }
             }
@@ -31,8 +33,14 @@ export default class SchedulerRecurring extends SchedulerBase {
             }
         }
         if (this._configuration.weeklyConfiguration != null) {
-            const dateCalculator: DateWeekCalculator = new DateWeekCalculator(this._configuration.weeklyConfiguration.numberWeeks, this._configuration.weeklyConfiguration.weekConfig);
+            const dateCalculator: DateWeekCalculator =
+                new DateWeekCalculator(this._configuration.weeklyConfiguration.numberWeeks, this._configuration.weeklyConfiguration.weekConfig);
             nextDate = dateCalculator.nextDate(nextDate);
+        }
+        if (this._configuration.monthlyConfiguration != null) {
+            const dateMonthCalculator: IDateMonthCalculator =
+                DateMonthCalculatorFactory.create(this._configuration.monthlyConfiguration);
+            nextDate = dateMonthCalculator.nextDate(nextDate);
         }
         return nextDate;
     }

@@ -1,7 +1,7 @@
 import { Occurs, SchedulerType } from "../enums";
 import DailyConfiguration from "./dailyConfiguration";
 import Limits from "./limits";
-import MonthlyConfiguration from "./MonthlyConfiguration";
+import MonthlyConfiguration from "./monthlyConfiguration";
 import WeeklyConfiguration from "./weeklyConfiguration";
 
 export default class Configuration {

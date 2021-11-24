@@ -57,7 +57,21 @@ describe('date month calculador', () => {
     [VariableDayNumber.Third, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 3, 0), new Date(2020, 3, 3)],
     [VariableDayNumber.Fourth, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 6, 0), new Date(2020, 3, 6)],
     [VariableDayNumber.Last, VariableDayType.Weekday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 31, 0), new Date(2020, 3, 30)],
-    [VariableDayNumber.Fourth, VariableDayType.Weekday, 3, new Date(2020, 0, 24, 0), new Date(2020, 1, 6, 0), new Date(2020, 4, 6)]
+    [VariableDayNumber.Fourth, VariableDayType.Weekday, 3, new Date(2020, 0, 24, 0), new Date(2020, 1, 6, 0), new Date(2020, 4, 6)],
+
+    [VariableDayNumber.First, VariableDayType.Day, 3, new Date(2020, 0, 3, 0), new Date(2020, 1, 1, 0), new Date(2020, 4, 1)],
+    [VariableDayNumber.Second, VariableDayType.Day, 3, new Date(2020, 0, 3, 0), new Date(2020, 1, 2, 0), new Date(2020, 4, 2)],
+    [VariableDayNumber.Third, VariableDayType.Day, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 3, 0), new Date(2020, 3, 3)],
+    [VariableDayNumber.Fourth, VariableDayType.Day, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 4, 0), new Date(2020, 3, 4)],
+    [VariableDayNumber.Last, VariableDayType.Day, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 31, 0), new Date(2020, 3, 30)],
+    [VariableDayNumber.Fourth, VariableDayType.Day, 3, new Date(2020, 0, 24, 0), new Date(2020, 1, 4, 0), new Date(2020, 4, 4)],
+
+    [VariableDayNumber.First, VariableDayType.Weekendday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 4, 0), new Date(2020, 3, 4)],
+    [VariableDayNumber.Second, VariableDayType.Weekendday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 5, 0), new Date(2020, 3, 5)],
+    [VariableDayNumber.Third, VariableDayType.Weekendday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 11, 0), new Date(2020, 3, 11)],
+    [VariableDayNumber.Fourth, VariableDayType.Weekendday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 12, 0), new Date(2020, 3, 12)],
+    [VariableDayNumber.Last, VariableDayType.Weekendday, 3, new Date(2020, 0, 3, 0), new Date(2020, 0, 26, 0), new Date(2020, 3, 26)],
+    [VariableDayNumber.Fourth, VariableDayType.Weekendday, 3, new Date(2020, 0, 24, 0), new Date(2020, 1, 9, 0), new Date(2020, 4, 10)]
 
   ])('next date calculate is correct with the number %p of %p variable day every %p months, current date %p and result %p',
     (inputVariableDayNumber: VariableDayNumber, inputVariableDayType: VariableDayType, inputEveryMonth, inputDate: Date, expectedDate: Date, nextMonthExpectedDate: Date) => {

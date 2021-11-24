@@ -16,7 +16,7 @@ export enum TimeUnit {
 }
 
 export enum MonthlyFrecuencyType {
-    excatDay,
+    exactDay,
     variableDay
 }
 

@@ -47,7 +47,7 @@ export default class MonthlyConfiguration {
             throw new Error('frecuencyType must have a value')
         }
 
-        if (this.frecuencyType === MonthlyFrecuencyType.excatDay) {
+        if (this.frecuencyType === MonthlyFrecuencyType.exactDay) {
             if (this.day == null || this.day === 0) {
                 throw new Error('day mus have a value in MonthlyFrecuencyType.excatDay');
             }
