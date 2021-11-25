@@ -11,20 +11,34 @@ import IDateMonthCalculator from "../calculators/iDateMonthCalculator";
 export default class SchedulerRecurring extends SchedulerBase {
     private readonly _configuration: Configuration;
     private readonly _ouputGenerator: OuputGenerator;
+    private readonly _timeCalculator: TimeCalculator;
+    private readonly _dateWeekCalculator: DateWeekCalculator;
+    private readonly _dateMonthCalculator: IDateMonthCalculator;
 
     constructor(configuration: Configuration) {
         super(configuration.enabled, configuration.limits)
         this._configuration = configuration;
         this._ouputGenerator = new OuputGenerator(configuration);
+        if (this._configuration.dailyConfiguration != null) {
+            this._timeCalculator = TimeCalculatorFactory.create(this._configuration.dailyConfiguration);
+        }
+        if (this._configuration.weeklyConfiguration != null) {
+            this._dateWeekCalculator =
+                new DateWeekCalculator(this._configuration.weeklyConfiguration.numberWeeks, this._configuration.weeklyConfiguration.weekConfig);
+        }
+        if (this._configuration.monthlyConfiguration != null) {
+            this._dateMonthCalculator =
+                DateMonthCalculatorFactory.create(this._configuration.monthlyConfiguration);
+        }
     }
 
     protected override getNextDateTimeProtected(): Date {
         let nextDate: Date = new Date(this._currentDate);
         if (this._configuration.dailyConfiguration != null) {
-            const timeCalculator: TimeCalculator = TimeCalculatorFactory.create(this._configuration.dailyConfiguration);
-            if (timeCalculator != null) {
-                nextDate = timeCalculator.nextTime(nextDate);
-                if (timeCalculator.isLastTime === false && this._configuration.monthlyConfiguration == null) {
+            if (this._timeCalculator != null) {
+                nextDate = this._timeCalculator.nextTime(nextDate);
+                if (this._timeCalculator.isLastTime === false &&
+                    (this._dateMonthCalculator == null || this._dateMonthCalculator.firstExecution == false)) {
                     return nextDate;
                 }
             }
@@ -32,15 +46,18 @@ export default class SchedulerRecurring extends SchedulerBase {
                 nextDate.setDate(nextDate.getDate() + this._configuration.dailyConfiguration.frecuency);
             }
         }
-        if (this._configuration.weeklyConfiguration != null) {
-            const dateCalculator: DateWeekCalculator =
-                new DateWeekCalculator(this._configuration.weeklyConfiguration.numberWeeks, this._configuration.weeklyConfiguration.weekConfig);
-            nextDate = dateCalculator.nextDate(nextDate);
+        if (this._dateWeekCalculator != null) {
+            nextDate = this._dateWeekCalculator.nextDate(nextDate);
         }
-        if (this._configuration.monthlyConfiguration != null) {
-            const dateMonthCalculator: IDateMonthCalculator =
-                DateMonthCalculatorFactory.create(this._configuration.monthlyConfiguration);
-            nextDate = dateMonthCalculator.nextDate(nextDate);
+        if (this._dateMonthCalculator != null &&
+            (this._timeCalculator?.isLastTime || this._dateMonthCalculator.firstExecution)) {
+            if (this._configuration.dailyConfiguration?.startTime != null) {
+                const starTimeDaily = this._configuration.dailyConfiguration?.startTime;
+                nextDate.setHours(starTimeDaily.getHours());
+                nextDate.setMinutes(starTimeDaily.getMinutes());
+                nextDate.setSeconds(starTimeDaily.getSeconds());
+            }
+            nextDate = this._dateMonthCalculator.nextDate(nextDate);
         }
         return nextDate;
     }

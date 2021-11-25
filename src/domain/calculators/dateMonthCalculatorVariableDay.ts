@@ -38,6 +38,9 @@ export default class DateMonthCalculatorVariableDay implements IDateMonthCalcula
         return nextDate;
     }
 
+    public get firstExecution(): boolean {
+        return this._firstExecution;
+    }
 
     private getNextDateFromSteps(nextTempDate: Date, daysInMonth: number) {
         const stepsDays: Map<number, Date> = this.getStepsDays(daysInMonth, nextTempDate);

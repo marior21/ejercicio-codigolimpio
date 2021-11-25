@@ -28,6 +28,7 @@
     "build:watch": "tsc -w -p tsconfig.release.json",
     "lint": "eslint . --ext .ts,.tsx",
     "test": "jest --coverage",
+    "test-m": "jest -i cheduler.monthly.test",
     "test:watch": "jest --watch"
   },
   "author": "Mario Rivero",

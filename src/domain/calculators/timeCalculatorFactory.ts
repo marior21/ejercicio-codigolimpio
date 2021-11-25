@@ -10,12 +10,13 @@ export default class TimeCalculatorFactory {
 
     public static create(dailayConfiguration: DailyConfiguration): TimeCalculator {
         const { timeUnit, occursEveryNumber, startTime, endTime, occursOnceTime, frecuency } = dailayConfiguration;
+        if (timeUnit == null && occursOnceTime == null) {
+            return null;
+        }
         if (occursOnceTime != null) {
             return new TimeCalculatorOnce(occursOnceTime, frecuency);
         }
-        if (timeUnit == null) {
-            return null;
-        }
+
         switch (timeUnit) {
             case TimeUnit.Hours:
                 return new TimeCalculatorHour(occursEveryNumber, startTime, endTime, frecuency);

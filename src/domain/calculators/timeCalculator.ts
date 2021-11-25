@@ -20,6 +20,7 @@ export default abstract class TimeCalculator {
 
     public nextTime(currentTime: Date): Date {
         let nextTime: Date = new Date(currentTime);
+        this._isLastTime = false;
         if (this.isLessThanStarTime(nextTime)) {
             nextTime.setHours(this._startTime.getHours(), this._startTime.getMinutes(), this._startTime.getSeconds());
             return nextTime;

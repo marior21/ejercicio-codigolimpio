@@ -4,11 +4,16 @@ import IDateMonthCalculator from "./iDateMonthCalculator";
 export default class DateMonthCalculatorDay implements IDateMonthCalculator {
     private readonly _day: number;
     private readonly _everyMonths: number;
-
+    private _firstExecution = true;
     constructor(day: number, everyMonths: number) {
         this._day = day;
         this._everyMonths = everyMonths;
     }
+
+    public get firstExecution(): boolean {
+        return this._firstExecution;
+    }
+
     nextDate(currentDate: Date): Date {
         const nextDate = new Date(currentDate);
         if (nextDate.getDate() == this._day) {
@@ -22,7 +27,7 @@ export default class DateMonthCalculatorDay implements IDateMonthCalculator {
                 nextDate.setDate(nextDate.getDate() + 1);
             }
         }
-
+        this._firstExecution = false;
         return nextDate;
     }
 
