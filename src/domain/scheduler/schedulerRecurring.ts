@@ -7,6 +7,7 @@ import DateWeekCalculator from "../calculators/dateWeekCalculator";
 import OuputGenerator from "../ouputGenerator";
 import DateMonthCalculatorFactory from "../calculators/dateMonthCalculatorFactory";
 import IDateMonthCalculator from "../calculators/iDateMonthCalculator";
+import Utils from "../../utils/utils";
 
 export default class SchedulerRecurring extends SchedulerBase {
     private readonly _configuration: Configuration;
@@ -49,13 +50,10 @@ export default class SchedulerRecurring extends SchedulerBase {
         if (this._dateWeekCalculator != null) {
             nextDate = this._dateWeekCalculator.nextDate(nextDate);
         }
-        if (this._dateMonthCalculator != null &&
-            (this._timeCalculator?.isLastTime || this._dateMonthCalculator.firstExecution)) {
+        if (this._dateMonthCalculator != null && (this._timeCalculator?.isLastTime || this._dateMonthCalculator.firstExecution)) {
             if (this._configuration.dailyConfiguration?.startTime != null) {
                 const starTimeDaily = this._configuration.dailyConfiguration?.startTime;
-                nextDate.setHours(starTimeDaily.getHours());
-                nextDate.setMinutes(starTimeDaily.getMinutes());
-                nextDate.setSeconds(starTimeDaily.getSeconds());
+                Utils.setTime(nextDate, starTimeDaily);
             }
             nextDate = this._dateMonthCalculator.nextDate(nextDate);
         }

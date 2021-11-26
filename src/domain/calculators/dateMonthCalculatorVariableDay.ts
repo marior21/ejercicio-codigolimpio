@@ -21,16 +21,22 @@ export default class DateMonthCalculatorVariableDay implements IDateMonthCalcula
             nextDate = new Date(
                 nextDate.getFullYear(),
                 nextDate.getMonth() + this._everyMonths,
-                1);
+                1,
+                nextDate.getHours(),
+                nextDate.getMinutes(),
+                nextDate.getSeconds());
             currentDateTemp = new Date(nextDate);
         }
-        let nextTempDate: Date = new Date(nextDate.getFullYear(), nextDate.getMonth(), 1, 0, 0, 0);
+        let nextTempDate: Date = new Date(nextDate);
+        nextTempDate.setDate(1);
         const daysInMonth: number = Utils.getDaysInMonth(nextDate.getFullYear(), nextDate.getMonth());
 
         nextDate = this.getNextDateFromSteps(nextTempDate, daysInMonth);
 
         if (nextDate < currentDateTemp) {
-            nextTempDate = new Date(nextDate.getFullYear(), nextDate.getMonth() + 1, 1, 0, 0, 0);
+            nextTempDate = new Date(nextDate);
+            nextTempDate.setDate(1);
+            nextTempDate.setMonth(nextDate.getMonth() + 1);
             nextDate = this.getNextDateFromSteps(nextTempDate, daysInMonth);
         }
 
@@ -56,10 +62,6 @@ export default class DateMonthCalculatorVariableDay implements IDateMonthCalcula
             if (DateMonthCalculatorVariableDay.isDayVariableDayType(nextTempDate, this._variableDayType)) {
                 numberOcurrsDay++;
                 dictionaryDays.set(numberOcurrsDay, new Date(nextTempDate));
-            }
-
-            if (nextTempDate.getDate() === daysInMonth && numberOcurrsDay < this._frecuencyVariableDay) {
-                index = 1;
             }
             nextTempDate.setDate(nextTempDate.getDate() + 1);
         }
