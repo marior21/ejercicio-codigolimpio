@@ -50,9 +50,11 @@ export default class SchedulerRecurring extends SchedulerBase {
         if (this._dateWeekCalculator != null) {
             nextDate = this._dateWeekCalculator.nextDate(nextDate);
         }
-        if (this._dateMonthCalculator != null && (this._timeCalculator?.isLastTime || this._dateMonthCalculator.firstExecution)) {
+        const firstExecution: boolean =
+            this._dateMonthCalculator != null && (this._timeCalculator?.isLastTime || this._dateMonthCalculator.firstExecution);
+        if (this._dateMonthCalculator != null || firstExecution) {
             if (this._configuration.dailyConfiguration?.startTime != null) {
-                const starTimeDaily = this._configuration.dailyConfiguration?.startTime;
+                const starTimeDaily = this._configuration.dailyConfiguration.startTime;
                 Utils.setTime(nextDate, starTimeDaily);
             }
             nextDate = this._dateMonthCalculator.nextDate(nextDate);

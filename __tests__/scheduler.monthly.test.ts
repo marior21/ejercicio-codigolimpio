@@ -65,4 +65,30 @@ describe('scheduler monthly', () => {
       expect(nextDate).toStrictEqual(nextMonthsExpectedDate2);
     });
 
+  test.each([
+    [new Date(2020, 4, 4), new Date(2020, 5, 1), new Date(2020, 8, 1), new Date(2020, 11, 1)],
+    // [new Date(2020, 0, 1), new Date(2020, 3, 1), new Date(2020, 6, 1), new Date(2020, 9, 1)]
+  ])('next date calculate is correct with monthly configuration the first day each 3 months start %p',
+    (inputDate: Date, expectedDate: Date, nextMonthsExpectedDate: Date, nextMonthsExpectedDate2: Date) => {
+      const startDate: Date = new Date(2020, 0, 1);
+
+      const limits: Limits = new Limits(startDate, null);
+
+      const monthlyConfiguration: MonthlyConfiguration =
+        new MonthlyConfiguration(MonthlyFrecuencyType.variableDay, null, 3, VariableDayNumber.First, VariableDayType.Day);
+      const configuration: Configuration =
+        new Configuration(SchedulerType.Recurring, true, Occurs.Monthly, null, limits, null, null, monthlyConfiguration);
+
+      const scheduler: Scheduler = SchedulerFactory.create(configuration);
+
+      let nextDate: Date = scheduler.getNextDateTime(inputDate).nextDate;
+      expect(nextDate).toStrictEqual(expectedDate);
+
+      nextDate = scheduler.getNextDateTime(nextDate).nextDate;
+      expect(nextDate).toStrictEqual(nextMonthsExpectedDate);
+
+      nextDate = scheduler.getNextDateTime(nextDate).nextDate;
+      expect(nextDate).toStrictEqual(nextMonthsExpectedDate2);
+    });
+
 });

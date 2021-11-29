@@ -1,6 +1,6 @@
 import Utils from "../utils/utils";
 import Configuration from "./configuration/configuration";
-import { Occurs, TimeUnit } from "./enums";
+import { MonthlyFrecuencyType, Occurs, TimeUnit } from "./enums";
 import Ouput from "./ouput";
 
 export default class OuputGenerator {
@@ -20,6 +20,13 @@ export default class OuputGenerator {
         }
         if (this._configuration.ocurrs == Occurs.Weekly) {
             when = `every ${this._configuration.weeklyConfiguration.numberWeeks} weeks on ${this._configuration.weeklyConfiguration.weekConfig.getDescription()}`;
+        }
+        if (this._configuration.ocurrs == Occurs.Monthly) {
+            const { frecuencyType, day, frecuencyVariableDay, variableDayType, everyMonths } = this._configuration.monthlyConfiguration;
+            when = frecuencyType === MonthlyFrecuencyType.variableDay
+                ? `the ${frecuencyVariableDay} ${variableDayType}`
+                : `the day ${day}`;
+            when += `  of very ${everyMonths} months`;
         }
         if (this._configuration.dailyConfiguration?.occursOnceTime != null) {
             when += ` at ${Utils.formatTime(this._configuration.dailyConfiguration.occursOnceTime)}`
