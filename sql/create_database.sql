@@ -1,0 +1,1 @@
+CREATE DATABASE jobscheduler OWNER postgres ENCODING UTF8 tablespace pg_default; 

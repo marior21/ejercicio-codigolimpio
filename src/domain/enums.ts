@@ -4,9 +4,9 @@ export enum SchedulerType {
 }
 
 export enum Occurs {
-    Daily,
-    Weekly,
-    Monthly
+    Daily = 0,
+    Weekly = 1,
+    Monthly = 2
 }
 
 export enum TimeUnit {
