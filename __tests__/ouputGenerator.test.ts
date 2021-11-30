@@ -1,9 +1,10 @@
 import Configuration from "../src/domain/configuration/configuration";
 import DailyConfiguration from "../src/domain/configuration/dailyConfiguration";
 import Limits from "../src/domain/configuration/limits";
+import MonthlyConfiguration from "../src/domain/configuration/monthlyConfiguration";
 import Week from "../src/domain/configuration/week";
 import WeeklyConfiguration from "../src/domain/configuration/weeklyConfiguration";
-import { Occurs, SchedulerType, TimeUnit } from "../src/domain/enums";
+import { MonthlyFrecuencyType, Occurs, SchedulerType, TimeUnit } from "../src/domain/enums";
 import OuputGenerator from "../src/domain/ouputGenerator";
 
 
@@ -63,6 +64,17 @@ describe('ouput generator', () => {
     const ouputGenerator: OuputGenerator = new OuputGenerator(configuration);
     expect(ouputGenerator.getOuput(new Date(2020, 4, 16)).description).toStrictEqual(
       'Ocurrs each 4 days starting on 01/01/2020'
+    );
+  });
+
+  test('ouput generator generate correct description with the month exactDay', () => {
+    const startDate: Date = new Date(2020, 0, 1);
+    const limits: Limits = new Limits(startDate, null);
+    const monthlyConfiguration: MonthlyConfiguration = new MonthlyConfiguration(MonthlyFrecuencyType.exactDay, 5, 3, null, null);
+    const configuration: Configuration = new Configuration(SchedulerType.Recurring, true, Occurs.Monthly, null, limits, null, null, monthlyConfiguration);
+    const ouputGenerator: OuputGenerator = new OuputGenerator(configuration);
+    expect(ouputGenerator.getOuput(new Date(2020, 4, 16)).description).toStrictEqual(
+      'Ocurrs the day 5 of very 3 months starting on 01/01/2020'
     );
   });
 });

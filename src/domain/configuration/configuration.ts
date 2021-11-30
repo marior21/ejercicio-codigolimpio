@@ -69,7 +69,6 @@ export default class Configuration {
         return this._monthlyConfiguration;
     }
 
-
     validateArguments(): void {
         if (this.schedulerType === SchedulerType.Once && this.oncedate == null) {
             throw new Error("Oncedate must have a value");
@@ -86,12 +85,6 @@ export default class Configuration {
             }
             if (this.ocurrs === Occurs.Monthly && this.monthlyConfiguration == null) {
                 throw new Error("MonthlyConfiguration must have a value");
-            }
-            if (this.ocurrs !== Occurs.Weekly && this.weeklyConfiguration != null) {
-                throw new Error("For WeekleyConfiguration ocurrs should be Weekly");
-            }
-            if (this.ocurrs !== Occurs.Monthly && this.monthlyConfiguration != null) {
-                throw new Error("For MonthlyConfiguration ocurrs should be Monthly");
             }
         }
         if (this.limits === null) {

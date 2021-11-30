@@ -1,7 +1,8 @@
 import Configuration from "../src/domain/configuration/configuration";
 import Limits from "../src/domain/configuration/limits";
+import MonthlyConfiguration from "../src/domain/configuration/monthlyConfiguration";
 import Week from "../src/domain/configuration/week";
-import { Occurs, SchedulerType } from "../src/domain/enums";
+import { MonthlyFrecuencyType, Occurs, SchedulerType, VariableDayNumber, VariableDayType } from "../src/domain/enums";
 
 
 describe('configuration', () => {
@@ -56,4 +57,35 @@ describe('configuration', () => {
     expect(() => new Configuration(SchedulerType.Recurring, true, Occurs.Monthly, null, limits, null, null, null)).toThrowError();
   });
 
+  test('monthlyConfiguration throw error if frecuencyType is null', () => {
+    expect(() => new MonthlyConfiguration(null, null, null, null, null)).toThrowError();
+  });
+
+  test('monthlyConfiguration throw error if frecuencyType is exactDay and day is null', () => {
+    expect(() => new MonthlyConfiguration(MonthlyFrecuencyType.exactDay, null, null, null, null)).toThrowError();
+  });
+
+  test('monthlyConfiguration throw error if frecuencyType is exactDay and day is 0', () => {
+    expect(() => new MonthlyConfiguration(MonthlyFrecuencyType.exactDay, 0, null, null, null)).toThrowError();
+  });
+
+  test('monthlyConfiguration throw error if frecuencyType is exactDay and day is more then 31', () => {
+    expect(() => new MonthlyConfiguration(MonthlyFrecuencyType.exactDay, 32, 3, null, null)).toThrowError();
+  });
+
+  test('monthlyConfiguration throw error if frecuencyType is variableDay and frecuencyVariableDay is null', () => {
+    expect(() => new MonthlyConfiguration(MonthlyFrecuencyType.variableDay, null, 3, null, VariableDayType.Sunday)).toThrowError();
+  });
+
+  test('monthlyConfiguration throw error if frecuencyType is variableDay and variableDayType is null', () => {
+    expect(() => new MonthlyConfiguration(MonthlyFrecuencyType.variableDay, null, 3, VariableDayNumber.First, null)).toThrowError();
+  });
+
+  test('monthlyConfiguration throw error if everymonth is null', () => {
+    expect(() => new MonthlyConfiguration(MonthlyFrecuencyType.variableDay, null, null, VariableDayNumber.First, VariableDayType.Sunday)).toThrowError();
+  });
+
+  test('monthlyConfiguration throw error if everymonth is 0', () => {
+    expect(() => new MonthlyConfiguration(MonthlyFrecuencyType.variableDay, null, 0, VariableDayNumber.First, VariableDayType.Sunday)).toThrowError();
+  });
 });

@@ -39,7 +39,7 @@ describe('scheduler monthly', () => {
 
   test.each([
     [new Date(2020, 4, 4), 9, TimeUnit.Hours, new Date(2020, 5, 1, 4, 0, 0), new Date(2020, 5, 1, 13, 0, 0), new Date(2020, 8, 1, 4, 0, 0)],
-  ])('next date calculate is correct with monthly configuration the firs day each 3 months start %p with evey %p %p unit and between 04:00 and 18:00 hour',
+  ])('next date calculate is correct with monthly configuration the first day each 3 months start %p with evey %p %p unit and between 04:00 and 18:00 hour',
     (inputDate: Date, occursEveryNumber: number, timeUnit: TimeUnit, expectedDate: Date, nextMonthsExpectedDate: Date, nextMonthsExpectedDate2: Date) => {
       const startDate: Date = new Date(2020, 0, 1);
       const starTime = new Date(null, null, null, 4);
@@ -67,7 +67,7 @@ describe('scheduler monthly', () => {
 
   test.each([
     [new Date(2020, 4, 4), new Date(2020, 5, 1), new Date(2020, 8, 1), new Date(2020, 11, 1)],
-    // [new Date(2020, 0, 1), new Date(2020, 3, 1), new Date(2020, 6, 1), new Date(2020, 9, 1)]
+    [new Date(2020, 0, 1), new Date(2020, 0, 1), new Date(2020, 3, 1), new Date(2020, 6, 1)]
   ])('next date calculate is correct with monthly configuration the first day each 3 months start %p',
     (inputDate: Date, expectedDate: Date, nextMonthsExpectedDate: Date, nextMonthsExpectedDate2: Date) => {
       const startDate: Date = new Date(2020, 0, 1);

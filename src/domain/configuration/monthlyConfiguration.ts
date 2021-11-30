@@ -49,7 +49,11 @@ export default class MonthlyConfiguration {
 
         if (this.frecuencyType === MonthlyFrecuencyType.exactDay) {
             if (this.day == null || this.day === 0) {
-                throw new Error('day mus have a value in MonthlyFrecuencyType.excatDay');
+                throw new Error('day must have a value in MonthlyFrecuencyType.excatDay');
+            }
+
+            if (this.day > 31) {
+                throw new Error('day value incorrect in MonthlyFrecuencyType.excatDay');
             }
         }
 
