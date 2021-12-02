@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Occurs, SchedulerType } from "../enums";
 import DailyConfiguration from "./dailyConfiguration";
 import Limits from "./limits";
@@ -36,6 +37,7 @@ export default class Configuration {
         this.validateArguments();
     }
 
+    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
     static create(props: any): Configuration {
         const { schedulerType, occurs, enabled, onceDate, startLimitDate } = props;
         return new Configuration(schedulerType, enabled, occurs, onceDate, new Limits(startLimitDate, null), null, null, null);
