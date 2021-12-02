@@ -6,9 +6,11 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-      - APP_DB_USER=docker
-      - APP_DB_PASS=docker
-      - APP_DB_NAME=docker
+      # - PGHOST='localhost'
+      # - PGUSER=process.env.POSTGRES_USER
+      # - PGDATABASE=jpbscheduler
+      # - PGPASSWORD=postgres
+      # - PGPORT=5438
     logging:
       options:
         max-size: 10m
@@ -17,9 +19,5 @@ services:
       - '5438:5432'
     volumes:
       #- ./postgres-data:/var/lib/postgresql/data
-      # copy the sql script to create tables
+      # copy the sql script to create databse and tables
       - ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
-      #- ./sql/create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
-      # copy the sql script to fill tables
-      #- ./sql/fill_tables.sql:/docker-entrypoint-initdb.d/fill_tables.sql
-      #- ./db:/docker-entrypoint-initdb.d/

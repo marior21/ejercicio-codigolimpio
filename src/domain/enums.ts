@@ -1,6 +1,6 @@
 export enum SchedulerType {
-    Once,
-    Recurring
+    Once = 0,
+    Recurring = 1
 }
 
 export enum Occurs {
@@ -10,14 +10,14 @@ export enum Occurs {
 }
 
 export enum TimeUnit {
-    Hours,
-    Minuts,
-    Seconds
+    Hours = 0,
+    Minuts = 1,
+    Seconds = 2
 }
 
 export enum MonthlyFrecuencyType {
-    exactDay,
-    variableDay
+    exactDay = 0,
+    variableDay = 1
 }
 
 export enum VariableDayNumber {

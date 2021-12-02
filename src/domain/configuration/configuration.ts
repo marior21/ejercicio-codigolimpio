@@ -36,6 +36,11 @@ export default class Configuration {
         this.validateArguments();
     }
 
+    static create(props: any): Configuration {
+        const { schedulerType, occurs, enabled, onceDate, startLimitDate } = props;
+        return new Configuration(schedulerType, enabled, occurs, onceDate, new Limits(startLimitDate, null), null, null, null);
+    }
+
     get schedulerType(): SchedulerType {
         return this._schedulerType;
     }
